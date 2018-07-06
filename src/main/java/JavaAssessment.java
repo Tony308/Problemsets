@@ -19,7 +19,7 @@ public class JavaAssessment {
         for (int x = 0; x < input.length();x++) {
 
         }
-        return "";
+        return temp;
     }
     //
     // A sandwich is two pieces of bread with something in between. Return the
@@ -118,14 +118,15 @@ public class JavaAssessment {
     public String stringClean(String input) {
         boolean first = true;
         int counter = 0;
-
+        String result = input;
         String[] list = input.split("");
-        if (list[counter] == list[counter+1]) {
-            input.replace(list[counter], "");
+        for (int x = 1; x < input.length();x++) {
+            if (list[x-1] == list[x]) {
+                result = input.replace(list[counter], "");
+            }
         }
 
-
-        return "";
+        return result;
     }
 
     // The fibonacci sequence is a famous bit of mathematics, and it happens to

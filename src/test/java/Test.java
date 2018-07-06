@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Ignore;
 
 import static org.junit.Test.*;
@@ -78,7 +79,13 @@ public class Test {
         assertEquals(6, main.bunnyEars(3));
         assertEquals(50, main.bunnyEars(25));
 
+    }
+
+    @org.junit.Test
+    public void doubleCharTest() {
+        JavaAssessment main = new JavaAssessment();
 
     }
+
 }
 
