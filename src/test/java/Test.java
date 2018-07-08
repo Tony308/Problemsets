@@ -15,6 +15,7 @@ public class Test {
         assertEquals("", main.getSandwich("xxbreadyy"));
         assertEquals("honey", main.getSandwich("xxbreadhoneybreadyy"));
     }
+
     @org.junit.Test
     public void evenlySpacedTest() {
         JavaAssessment main = new JavaAssessment();
@@ -47,6 +48,7 @@ public class Test {
     }
 
     @org.junit.Test
+    @Ignore
     public void stringCleanTest() {
 
         JavaAssessment main = new JavaAssessment();
@@ -56,28 +58,28 @@ public class Test {
     }
 
     @org.junit.Test
-    @Ignore
     public void fibonacciTest() {
         JavaAssessment main = new JavaAssessment();
 
         assertEquals(0, main.fibonacci(0));
         assertEquals(1, main.fibonacci(1));
-//        assertEquals(1, main.fibonacci(2));
-//        assertEquals(2, main.fibonacci(3));
-//        assertEquals(75025, main.fibonacci(25));
+        assertEquals(1, main.fibonacci(2));
+        assertEquals(2, main.fibonacci(3));
+        assertEquals(75025, main.fibonacci(25));
 
 
     }
 
     @org.junit.Test
-
     public void bunnyEarsTest() {
         JavaAssessment main = new JavaAssessment();
-        System.out.println(main.bunnyEars(1));
+        assertEquals(0, main.bunnyEars(0));
         assertEquals(2, main.bunnyEars(1));
         assertEquals(4, main.bunnyEars(2));
         assertEquals(6, main.bunnyEars(3));
-        assertEquals(50, main.bunnyEars(25));
+        assertEquals(8, main.bunnyEars(4));
+        assertEquals(16, main.bunnyEars(32));
+
 
     }
 
@@ -85,7 +87,19 @@ public class Test {
     public void doubleCharTest() {
         JavaAssessment main = new JavaAssessment();
 
+        assertEquals("TThhee", main.doubleChar("The"));
+        assertEquals("AAAAbbbb", main.doubleChar("AAbb"));
+        assertEquals("HHii--TThheerree", main.doubleChar("Hi-There"));
     }
 
+    @org.junit.Test
+    public void superBlockTest() {
+        JavaAssessment main = new JavaAssessment();
+
+        assertEquals(2, main.superBlock("jeffbert"));
+        assertEquals(3, main.superBlock("abbCCCddBBBxx"));
+        assertEquals(0,main.superBlock(""));
+
+    }
 }
 

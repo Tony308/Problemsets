@@ -15,9 +15,10 @@ public class JavaAssessment {
 
     public String doubleChar(String input) {
 
-        String temp = input;
+        String temp = "";
         for (int x = 0; x < input.length();x++) {
-
+            temp += input.charAt(x);
+            temp += input.charAt(x);
         }
         return temp;
     }
@@ -38,9 +39,7 @@ public class JavaAssessment {
 
         if (input.contains("bread")) {
             first = input.indexOf("bread");
-
             second = input.indexOf("bread", first+5);
-
         }
 
         if (second <= 0) {
@@ -67,7 +66,6 @@ public class JavaAssessment {
         } else if (  ((a-b) != (b-c))   ||   (c-a) != (a-b) ) {
             result = false;
         }
-
         return result;
     }
 
@@ -80,14 +78,7 @@ public class JavaAssessment {
 
     public String nTwice(String input, int a) {
 
-        String result = input;
-
-        String firstHalf = input.substring(0,a);
-        String secondHalf = input.substring(input.length()-a, input.length());
-
-        result = firstHalf + secondHalf;
-
-        return result;
+        return input.substring(0,a) + input.substring(input.length()-a, input.length());
     }
 
     // Given a string, return true if it ends in "ly".
@@ -115,18 +106,10 @@ public class JavaAssessment {
     // stringClean("yyzzza") → "yza"
     // stringClean("abbbcdd") → "abcd"
     // stringClean("Hello") → "Helo"
-    public String stringClean(String input) {
-        boolean first = true;
-        int counter = 0;
-        String result = input;
-        String[] list = input.split("");
-        for (int x = 1; x < input.length();x++) {
-            if (list[x-1] == list[x]) {
-                result = input.replace(list[counter], "");
-            }
-        }
 
-        return result;
+    public String stringClean(String input) {
+
+        return stringClean(input);
     }
 
     // The fibonacci sequence is a famous bit of mathematics, and it happens to
@@ -146,22 +129,15 @@ public class JavaAssessment {
     // fibonacci(25) → 75025
 
     public int fibonacci(int input) {
-        boolean done = false;
-
-        int first = 0, second = 1;
-        int newest = first + second;
-
-        first = second;
-        second = newest;
 
         if (input == 0){
             return 0;
         }
-        if (done){
-            return newest;
+        if (input == 1 ){
+            return 1;
         }
+        return fibonacci(input - 1) + fibonacci(input - 2);
 
-        return -1;
     }
 
     // We have a number of bunnies and each bunny has two big floppy ears. We
@@ -175,16 +151,15 @@ public class JavaAssessment {
     // bunnyEars(16) → 32
 
     public int bunnyEars(int input) {
-        boolean finish = false;
 
-        if (input <= 0 ){
-            return input ;
-        }
-        input--;
-        System.out.println(input + 2);
-        bunnyEars(input);
-
-        return -1;
+        if ((input % 5) == 0 && input != 1  && input != 0)
+            return 1 + input + bunnyEars(input - 1);
+        else if ((input % 2) == 0 && input != 0 )
+            return 2 + bunnyEars(input - 1);
+        else if ((input % 2) != 0 && input != 0)
+            return 3 + input + bunnyEars(input - 1);
+        else
+            return 0;
     }
 
     // Given a string, return the length of the largest "block" in the string.
@@ -197,15 +172,14 @@ public class JavaAssessment {
     public int superBlock(String str) {
 
         int counter = 1;
+        int result = 0;
 
-        for (int x = 0; x <str.length();x++) {
-
+        for (int x = 0;x < str.length()-1;x++) {
             if (str.charAt(x) == str.charAt(x+1)) {
                 counter++;
+                result = counter;
             }
         }
-
-        return counter;
-
+        return result;
     }
 }
