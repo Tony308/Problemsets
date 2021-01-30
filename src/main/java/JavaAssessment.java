@@ -1,7 +1,7 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import com.sun.xml.internal.fastinfoset.algorithm.BooleanEncodingAlgorithm;
-
-import javax.print.DocFlavor;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class JavaAssessment {
 
@@ -13,13 +13,16 @@ public class JavaAssessment {
     // doubleChar("AAbb") → "AAAAbbbb"
     // doubleChar("Hi-There") → "HHii--TThheerree"
 
-    public String doubleChar(String input) {
+    public java.lang.String doubleChar(String input) {
 
-        String temp = input;
-        for (int x = 0; x < input.length();x++) {
+        String[] temp = input.split("");
 
-        }
-        return temp;
+        final StringBuilder stringBuilder = new StringBuilder();
+
+        Arrays.stream(temp).forEach((letter) -> {
+            stringBuilder.append(letter).append(letter);
+        });
+        return stringBuilder.toString();
     }
     //
     // A sandwich is two pieces of bread with something in between. Return the
@@ -47,7 +50,6 @@ public class JavaAssessment {
             return "";
         }
         return input.substring(first+5 ,second);
-
     }
 
     // Given three ints, a b c, one of them is small, one is medium and one is
@@ -61,14 +63,13 @@ public class JavaAssessment {
 
     public boolean evenlySpaced(int a, int b, int c) {
 
-        boolean result = false;
-        if (    ((a-b) == (b-c))   ||   (c-a) == (a-b)  ) {
-            result = true;
-        } else if (  ((a-b) != (b-c))   ||   (c-a) != (a-b) ) {
-            result = false;
-        }
 
-        return result;
+        if (    ((a-b) == (b-c))   ||   (c-a) == (a-b)  ) {
+            return true;
+        } else if (  ((a-b) != (b-c))   ||   (c-a) != (a-b) ) {
+             return false;
+        }
+        return false;
     }
 
     // Given a string and an int n, return a string made of the first and last n
@@ -83,7 +84,7 @@ public class JavaAssessment {
         String result = input;
 
         String firstHalf = input.substring(0,a);
-        String secondHalf = input.substring(input.length()-a, input.length());
+        String secondHalf = input.substring(input.length()-a);
 
         result = firstHalf + secondHalf;
 
@@ -116,17 +117,19 @@ public class JavaAssessment {
     // stringClean("abbbcdd") → "abcd"
     // stringClean("Hello") → "Helo"
     public String stringClean(String input) {
-        boolean first = true;
-        int counter = 0;
-        String result = input;
-        String[] list = input.split("");
-        for (int x = 1; x < input.length();x++) {
-            if (list[x-1] == list[x]) {
-                result = input.replace(list[counter], "");
-            }
-        }
+        String[] str = input.split("");
+        System.out.format("Input: %s\n", input);
 
-        return result;
+        if (input.length() < 1) {
+            return "";
+        }
+        if (input.length() == 1) {
+            return input;
+        };
+        if (str[0].equals(str[1])) {
+            return stringClean(input.substring(1));
+        }
+        return str[0] + stringClean(input.substring(1));
     }
 
     // The fibonacci sequence is a famous bit of mathematics, and it happens to
@@ -146,22 +149,12 @@ public class JavaAssessment {
     // fibonacci(25) → 75025
 
     public int fibonacci(int input) {
-        boolean done = false;
 
-        int first = 0, second = 1;
-        int newest = first + second;
-
-        first = second;
-        second = newest;
-
-        if (input == 0){
+        if (input == 1)
+            return 1;
+        else if (input <= 0)
             return 0;
-        }
-        if (done){
-            return newest;
-        }
-
-        return -1;
+        return fibonacci(input - 2) + fibonacci(input - 1);
     }
 
     // We have a number of bunnies and each bunny has two big floppy ears. We
@@ -175,16 +168,11 @@ public class JavaAssessment {
     // bunnyEars(16) → 32
 
     public int bunnyEars(int input) {
-        boolean finish = false;
-
-        if (input <= 0 ){
-            return input ;
+        if (input > 0) {
+            return 2 + bunnyEars(input - 1);
         }
-        input--;
-        System.out.println(input + 2);
-        bunnyEars(input);
 
-        return -1;
+        return 0;
     }
 
     // Given a string, return the length of the largest "block" in the string.
@@ -195,17 +183,24 @@ public class JavaAssessment {
     // superBlock("") → 0
 
     public int superBlock(String str) {
-
-        int counter = 1;
-
-        for (int x = 0; x <str.length();x++) {
-
-            if (str.charAt(x) == str.charAt(x+1)) {
-                counter++;
-            }
+        if (str.length() < 1) {
+            return 0;
         }
 
-        return counter;
+        AtomicInteger largest = new AtomicInteger();
+        Map<String, Integer> blocks = new HashMap<>();
 
+        Arrays.stream(str.split("")).forEach((letter) -> {
+            int val = blocks.getOrDefault(letter, 0);
+            blocks.put(letter, val + 1);
+        });
+
+        blocks.forEach((key, val) -> {
+            if (largest.get() < val) {
+                largest.set(val);
+            }
+        });
+
+        return largest.get();
     }
 }
